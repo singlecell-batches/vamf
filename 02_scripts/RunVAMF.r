@@ -42,12 +42,14 @@ typeof(G1testmtx) # now it will be "integer"
 pca_factor <- prcomp(t(G1testmtx), center=TRUE, scale=TRUE)$x
 
 # Save pca_factor to file
-write.table(pca_factor, file = "Group1_pca_factor.txt", quote=FALSE) # if quote = TRUE, the name labels will have quote marks.
+write.table(pca_factor, file = "Group1_pca_factor.txt", quote=FALSE, sep="\t") # if quote = TRUE, the name labels will have quote marks.
 
 # Run VAMF
 vamf_factor <- vamf(G1testmtx,10,nrestarts=2,log2trans=TRUE)$factors
 
 # Save vamf_factor to file
-write.table(vamf_factor, file="Group1_vamf_factor.txt", quote=FALSE)
+write.table(vamf_factor, file="Group1_vamf_factor.txt", quote=FALSE, sep="\t")
 
 # Plot separately.
+plot(pca_factors[,1:2])
+with(vamf_factors,plot(dim1,dim2))
