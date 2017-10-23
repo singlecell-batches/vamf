@@ -28,8 +28,9 @@ write.table(pca_factor, file = "subset_pca_factor.txt", quote=FALSE, sep="\t")
 vamf_factor <- vamf(Smtx,10,nrestarts=2,log2trans=TRUE)$factors
 ## Save vamf_factor to file
 write.table(vamf_factor, file="Group1_vamf_factor.txt", quote=FALSE, sep="\t")
-## Read in cell metadata, and join this with the PCA matrix? Assign colors to them by using metadata column as factor
-## referring to plot(sample(1:10,20,TRUE), col=factor(sample(letters[1:3],20,TRUE)))
-## Plot separately
-plot(pca_factors[,1:2])
-with(vamf_factors,plot(dim1,dim2))
+## In shell, join cell metadata with the PCA matrix. Assign colors to them by using metadata column as factor
+###pca_factors <- read.table("subset_pca_factor_w_meta.txt", header=FALSE, sep = "\t")
+###plot(pca_factors[,2:3] , col=pca_factors$V1)
+###legend("topleft", legend=levels(pca_factors$V1), pch=16, col=unique(pca_factors$V1))
+## Similarly, join cell metadata with VAMF matrix
+with(vamf_factors,plot(dim1,dim2, col=))
