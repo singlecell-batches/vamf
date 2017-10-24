@@ -83,7 +83,7 @@ factors$detection_rate <- 1-cens_rates_obj
 ggplot(cbind(factors,ref),aes(x=detection_rate,y=dim1,color=batch))+geom_point(size=3, alpha = 0.5) + theme_classic()+ggtitle("Dim1 vs. cell-specific detection")+labs(x="Detection Rate",y="Dimension 1") + theme(legend.position="top") + scale_colour_gradientn(colours=rainbow(6))
 
 
-```
+"""
 [102217 version]
 ## Calculate PCA factors, and export to file
 pca_factor <- prcomp(t(Smtx), center=TRUE, scale=TRUE)$x
@@ -98,4 +98,4 @@ write.table(vamf_factor, file="Group1_vamf_factor.txt", quote=FALSE, sep="\t")
 ###legend("topleft", legend=levels(pca_factors$V1), pch=16, col=unique(pca_factors$V1))
 ## Similarly, join cell metadata with VAMF matrix
 with(vamf_factors,plot(dim1,dim2, col=))
-```
+"""
