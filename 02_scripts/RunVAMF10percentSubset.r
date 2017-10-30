@@ -82,6 +82,29 @@ factors <- vamf_factor[,1:2]
 factors$detection_rate <- 1-cens_rates_obj
 ggplot(cbind(factors,ref),aes(x=detection_rate,y=dim1,color=batch))+geom_point(size=3, alpha = 0.5) + theme_classic()+ggtitle("Dim1 vs. cell-specific detection")+labs(x="Detection Rate",y="Dimension 1") + theme(legend.position="top") + scale_colour_gradientn(colours=rainbow(6))
 
+## For Olga's subset, using cell meta data in R directly. (This step follows the factor saving steps of both PCA and VAMF)
+## Read in cell meta data
+cellmeta <- read.csv("rawmtx/Olga_10pctSubset_cell_metadata.csv", header=TRUE)
+## Set cell column as row names
+rownames(cellmeta) <- cellmeta$cell
+## Remove cell column from cellmeta
+cellmeta <- cellmeta[,2:ncol(cellmeta)]
+## Merge meta data with factor matrix by row names
+pca_meta <- merge(cellmeta, pca_factor, by = "row.names")
+vamf_meta <- merge(cellmeta, vamf_factor, by = "row.names")
+## Save both merged data to file
+write.table(pca_meta, file = "Olga_10pct_subset_pca_wmeta.txt", quote=FALSE)
+write.table(vamf_meta, file = "Olga_10pct_subset_vamf_wmeta.txt", quote=FALSE)
+## Plotting PCAs
+pca_meta$cols <- as.numeric(as.factor(pca_meta$group))
+legend.cols <- unique(pca_meta$group)
+plot(pca_meta$PC1, pca_meta$PC2, col=pca_meta$cols)
+legend("topleft", legend=unique(pca_meta$group), pch=16, col=legend.cols)
+## Plotting VAMFs
+vamf_meta$cols <- as.number(as.factor(vamf_meta$group))
+plot(vamf_meta$dim1, vamf_meta$dim2, col=vamf_meta$cols)
+legend("bottomleft", legend=unique(vamf_meta$group), pch=16, col=legend.cols)
+plot(vamf_meta$dim1, vamf_meta$dim3, col=vamf_meta$cols)
 
 """
 [102217 version]
