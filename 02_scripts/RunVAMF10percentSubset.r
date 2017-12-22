@@ -106,6 +106,12 @@ plot(vamf_meta$dim1, vamf_meta$dim2, col=vamf_meta$cols)
 legend("bottomleft", legend=unique(vamf_meta$group), pch=16, col=legend.cols)
 plot(vamf_meta$dim1, vamf_meta$dim3, col=vamf_meta$cols)
 
+
+## Calculate Spearman Correlations
+cens_rates_obj <- Matrix::colMeans(Smtx==0)
+DR <- <-1-cens_rates_obj
+cor(vamf_meta$dim1, vamf_meta$DR, method = "spearman")
+
 """
 [102217 version]
 ## Calculate PCA factors, and export to file
